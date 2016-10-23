@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TEST</title>
+    <script type="text/javascript" src="stream.js"></script>
+    <script type="text/javascript">
+        //filter 
+        var filter = Stream.of(1,2,3,4,5,6,7,8,9)
+            .filter(function(it){
+                return it > 5;
+            }).collect();
+        console.log(filter);
+        //peek
+        var peek = Stream.of(1,2,3,4,5,6,7,8,9)
+            .peek(function(it){
+                return it > 5;
+            }).collect();
+        console.log(peek);
+        //map
+        var map = Stream.of(1,2,3,4,5,6,7,8,9)
+            .map(function(it){
+                return it * 2;
+            }).collect();
+        console.log(map);
+        //sorted
+        var sorted = Stream.of(1,2,3,4,5,6,7,8,9)
+            .sorted(function(it1,it2){
+                return it2 - it1;
+            }).collect();
+        console.log(sorted);
+        //all
+        var all = Stream.of(1,2,3,4,5,6,7,8,9)
+            .all(function(it){
+                return it > 5;
+            });
+        console.log(all);
+        //any
+        var any = Stream.of(1,2,3,4,5,6,7,8,9)
+            .any(function(it){
+                return it > 5;
+            });
+        console.log(any);
+        //none
+        var none = Stream.of(1,2,3,4,5,6,7,8,9)
+            .none(function(it){
+                return it > 5;
+            });
+        console.log(none);
+        //count
+        var count = Stream.of(1,2,3,4,5,6,7,8,9)
+            .filter(function(it){
+                return it > 5;
+            })
+            .count();
+        console.log(count);
+        //reduce
+        var reduce = Stream.of(1,2,3,4,5,6,7,8,9)
+            .reduce(function(pre,it){
+                return pre + it;
+            });
+        console.log(reduce);
+
+
+        var arr = [1,2,3,4,5,6,7,8,9];
+        for (var i = 0; i < arr.length; i++) {
+            for (var j = i + 1; j < arr.length; j++) {
+                if(arr[i] < arr[j]){
+                    var temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        console.log(arr);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
