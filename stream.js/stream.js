@@ -62,6 +62,13 @@ var Stream = function(){
         }
         return _result;
     };
+    Stream.prototype.forEach = function(func){
+        var _temp = this.collect();
+        var _result = _temp[0];
+        for (var i = 1; i < _temp.length; i++) {
+            func(_temp[i]);
+        }
+    };
     Stream.prototype.collect = function(){
         var _result = this._data;
         for (var n = 0; n < this._opers.length; n++) {
