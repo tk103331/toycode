@@ -26,6 +26,10 @@ var Stream = function(){
         this._opers.push({type:"map",func:func});
         return this;
     };
+    Stream.prototype.flatMap = function(func){
+        this._opers.push({type:"flatMap",func:func});
+        return this;
+    };
     Stream.prototype.sorted = function(func){
         this._opers.push({type:"sorted",func:func});
         return this;
@@ -122,6 +126,19 @@ var Stream = function(){
                 var _temp = [];
                 for (var i = 0; i < _result.length; i++) {
                     _temp.push(op.func(_result[i]));
+                }
+                _result = _temp;
+            }else if(op.type === "flatMap"){
+                var _temp = [];
+                for (var i = 0; i < _result.length; i++) {
+                    var _arr = op.func(_result[i]);
+                    if(_arr instanceof Array){
+                        for (var j = 0; j < _arr.length; j++) {
+                            _temp.push(_arr[j]);
+                        }
+                    }else{
+                        _temp.push(_arr);
+                    }
                 }
                 _result = _temp;
             }else if(op.type === "sorted"){

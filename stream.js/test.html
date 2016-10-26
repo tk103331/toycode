@@ -22,6 +22,18 @@
                 return it * 2;
             }).collect();
         console.log(map);
+        //flatMap
+        var flatMap = Stream.of(
+            {name:"Name1",children:["AAA","BBB"]},
+            {name:"Name2",children:["CCC"]},
+            {name:"Name3",children:["DDD"]},
+            {name:"Name4",children:["BBB","FFF"]},
+            {name:"Name5",children:["AAA"]},
+            {name:"Name6",children:["GGG"]}
+            ).flatMap(function(it){
+                return it.children;
+            }).collect();
+        console.log(flatMap);
         //sorted
         var sorted = Stream.of(1,2,3,4,5,6,7,8,9)
             .sorted(function(it1,it2){
