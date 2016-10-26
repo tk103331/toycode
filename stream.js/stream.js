@@ -7,6 +7,10 @@ var Stream = function(){
         if(arguments.length === 0 && arguments[0] instanceof Array){
             return new Stream(arguments[0]);
         }else{
+            var _temp = [];
+            for (var i = 0; i < arguments.length; i++) {
+                _temp.push(arguments[i]);
+            }
             return new Stream(arguments);
         }
     };
@@ -26,6 +30,7 @@ var Stream = function(){
         this._opers.push({type:"sorted",func:func});
         return this;
     };
+
     Stream.prototype.any = function(func){
         var _temp = this.collect();
         var _result = false;
@@ -59,6 +64,30 @@ var Stream = function(){
         var _result = _temp[0];
         for (var i = 1; i < _temp.length; i++) {
             _result = func(_result,_temp[i]);
+        }
+        return _result;
+    };
+    Stream.prototype.group = function(func){
+        var _temp = this.collect();
+        var _result = {};
+        for (var i = 1; i < _temp.length; i++) {
+            var _key = func(_temp[i]);
+            if(!_result[_key]){
+                _result[_key] = [];
+            }
+            _result[_key].push(_temp[i]);
+        }
+        return _result;
+    };
+    Stream.prototype.partition = function(func){
+        var _temp = this.collect();
+        var _result = {"true":[],"false":[]};
+        for (var i = 1; i < _temp.length; i++) {
+            if(func(_temp[i]) === true){
+                _result["true"].push(_temp[i]);
+            }else if(func(_temp[i]) === false){
+                _result["false"].push(_temp[i]);
+            }
         }
         return _result;
     };
