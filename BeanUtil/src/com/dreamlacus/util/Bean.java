@@ -11,7 +11,12 @@ public class Bean<T> {
     }
 
     public <P> P get(String expression) {
-        return BeanUtil.getValue(target, expression);
+        try {
+            return BeanUtil.getValue(target, expression);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public <P> void set(String expression, P value) {
