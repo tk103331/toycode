@@ -20,6 +20,10 @@ public class Bean<T> {
     }
 
     public <P> void set(String expression, P value) {
-        BeanUtil.setValue(target, expression, value);
+        try {
+            BeanUtil.setValue(target, expression, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
