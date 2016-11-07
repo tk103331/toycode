@@ -34,7 +34,14 @@ var Stream = function(){
         this._opers.push({type:"sorted",func:func});
         return this;
     };
-
+    Stream.prototype.limit = function(num){
+        this._opers.push({type:"limit",num:num});
+        return this;
+    };
+    Stream.prototype.skip = function(num){
+        this._opers.push({type:"skip",num:num});
+        return this;
+    };  
     Stream.prototype.any = function(func){
         var _temp = this.collect();
         var _result = false;
@@ -105,7 +112,7 @@ var Stream = function(){
     };
     Stream.prototype.last = function(func){
         var _temp = this.collect();
-        for (var i = _temp.length-1; i >= 0; i++) {
+        for (var i = _temp.length-1; i >= 0; i--) {
             if(func(_temp[i]) === true){
                 return _temp[i];
             }
@@ -167,6 +174,18 @@ var Stream = function(){
                             _temp[j] = _t;
                         }
                     }
+                }
+                _result = _temp;
+            }else if(op.type === "limit"){
+                var _temp = [];
+                for (var i = 0; i < op.num && i < _result.length; i++) {
+                    _temp.push(_result[i]);
+                }
+                _result = _temp;
+            }else if(op.type === "skip"){
+                var _temp = [];
+                for (var i = op.num; i < _result.length; i++) {
+                    _temp.push(_result[i]);
                 }
                 _result = _temp;
             }

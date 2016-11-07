@@ -40,6 +40,22 @@
                 return it2 - it1;
             }).collect();
         console.log(sorted);
+        //limit
+        var limit = Stream.of(1,2,3,4,5,6,7,8,9)
+            .filter(function(it){
+                return it % 2 == 1;
+            })
+            .limit(3)
+            .collect();
+        console.log(limit);
+        //skip
+        var skip = Stream.of(1,2,3,4,5,6,7,8,9)
+            .filter(function(it){
+                return it % 2 == 1;
+            })
+            .skip(3)
+            .collect();
+        console.log(skip);
         //all
         var all = Stream.of(1,2,3,4,5,6,7,8,9)
             .all(function(it){
@@ -95,17 +111,32 @@
                 return it.age > 18;
             });
         console.log(partition);
-        var arr = [1,2,3,4,5,6,7,8,9];
-        for (var i = 0; i < arr.length; i++) {
-            for (var j = i + 1; j < arr.length; j++) {
-                if(arr[i] < arr[j]){
-                    var temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
-            }
-        }
-        console.log(arr);
+        //first
+        var first = Stream.of(
+            {name:"Name1",age:12},
+            {name:"Name2",age:25},
+            {name:"Name3",age:17},
+            {name:"Name4",age:34},
+            {name:"Name5",age:19},
+            {name:"Name6",age:11}
+            ).first(function(it){
+                return it.age > 18;
+            });
+        console.log(first);
+        //last
+        var last = Stream.of(
+            {name:"Name1",age:12},
+            {name:"Name2",age:25},
+            {name:"Name3",age:17},
+            {name:"Name4",age:34},
+            {name:"Name5",age:19},
+            {name:"Name6",age:11}
+            ).last(function(it){
+                return it.age > 18;
+            });
+        console.log(last);
+        
+
     </script>
 </head>
 <body>
