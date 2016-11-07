@@ -74,7 +74,7 @@ var Stream = function(){
     Stream.prototype.group = function(func){
         var _temp = this.collect();
         var _result = {};
-        for (var i = 1; i < _temp.length; i++) {
+        for (var i = 0; i < _temp.length; i++) {
             var _key = func(_temp[i]);
             if(!_result[_key]){
                 _result[_key] = [];
@@ -86,7 +86,7 @@ var Stream = function(){
     Stream.prototype.partition = function(func){
         var _temp = this.collect();
         var _result = {"true":[],"false":[]};
-        for (var i = 1; i < _temp.length; i++) {
+        for (var i = 0; i < _temp.length; i++) {
             if(func(_temp[i]) === true){
                 _result["true"].push(_temp[i]);
             }else if(func(_temp[i]) === false){
@@ -94,6 +94,22 @@ var Stream = function(){
             }
         }
         return _result;
+    };
+    Stream.prototype.first = function(func){
+        var _temp = this.collect();
+        for (var i = 0; i < _temp.length; i++) {
+            if(func(_temp[i]) === true){
+                return _temp[i];
+            }
+        }
+    };
+    Stream.prototype.last = function(func){
+        var _temp = this.collect();
+        for (var i = _temp.length-1; i >= 0; i++) {
+            if(func(_temp[i]) === true){
+                return _temp[i];
+            }
+        }
     };
     Stream.prototype.forEach = function(func){
         var _temp = this.collect();
