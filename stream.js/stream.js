@@ -41,7 +41,11 @@ var Stream = function(){
     Stream.prototype.skip = function(num){
         this._opers.push({type:"skip",num:num});
         return this;
-    };  
+    };
+    Stream.prototype.distinct = function(num){
+        this._opers.push({type:"distinct",num:num});
+        return this;
+    };
     Stream.prototype.any = function(func){
         var _temp = this.collect();
         var _result = false;
@@ -186,6 +190,21 @@ var Stream = function(){
                 var _temp = [];
                 for (var i = op.num; i < _result.length; i++) {
                     _temp.push(_result[i]);
+                }
+                _result = _temp;
+            }else if(op.type === "distinct"){
+                var _temp = [];
+                for (var i = 0; i < _result.length; i++) {
+                    var found = false;
+                    for(var j = 0; j < _temp.length; j++){
+                        if(op.func(_temp[j],_result[j]) === true){
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found){
+                        _temp.push(_result[i]);
+                    }
                 }
                 _result = _temp;
             }
