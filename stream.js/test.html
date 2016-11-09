@@ -4,139 +4,183 @@
     <title>TEST</title>
     <script type="text/javascript" src="stream.js"></script>
     <script type="text/javascript">
-        //filter 
-        var filter = Stream.of(1,2,3,4,5,6,7,8,9)
+        //filter
+        var intArr = [1,2,3,4,5,6,7,8,9];
+        var filter = Stream.of(intArr)
             .filter(function(it){
                 return it > 5;
             }).collect();
+        console.group("filter");
+        console.log(intArr);
         console.log(filter);
+        console.groupEnd();
         //peek
-        var peek = Stream.of(1,2,3,4,5,6,7,8,9)
+        var peek = Stream.of(intArr)
             .peek(function(it){
                 return it > 5;
             }).collect();
+        console.group("peek");
+        console.log(intArr);
         console.log(peek);
+        console.groupEnd();
         //map
-        var map = Stream.of(1,2,3,4,5,6,7,8,9)
+        var map = Stream.of(intArr)
             .map(function(it){
                 return it * 2;
             }).collect();
+        console.group("map");
+        console.log(intArr);
         console.log(map);
+        console.groupEnd();
         //flatMap
-        var flatMap = Stream.of(
+        var flatMapObjs = [
             {name:"Name1",children:["AAA","BBB"]},
             {name:"Name2",children:["CCC"]},
             {name:"Name3",children:["DDD"]},
             {name:"Name4",children:["BBB","FFF"]},
             {name:"Name5",children:["AAA"]},
             {name:"Name6",children:["GGG"]}
-            ).flatMap(function(it){
+        ];
+        var flatMap = Stream.of(flatMapObjs)
+            .flatMap(function(it){
                 return it.children;
             }).collect();
+        console.group("flatMap");
+        console.log(flatMapObjs);
         console.log(flatMap);
+        console.groupEnd();
         //sorted
-        var sorted = Stream.of(1,2,3,4,5,6,7,8,9)
+        var sorted = Stream.of(intArr)
             .sorted(function(it1,it2){
                 return it2 - it1;
             }).collect();
+        console.group("sorted");
+        console.log(intArr);
         console.log(sorted);
+        console.groupEnd();
         //limit
-        var limit = Stream.of(1,2,3,4,5,6,7,8,9)
+        var limit = Stream.of(intArr)
             .filter(function(it){
                 return it % 2 == 1;
             })
             .limit(3)
             .collect();
+        console.group("limit");
+        console.log(intArr);
         console.log(limit);
+        console.groupEnd();
         //skip
-        var skip = Stream.of(1,2,3,4,5,6,7,8,9)
+        var skip = Stream.of(intArr)
             .filter(function(it){
                 return it % 2 == 1;
             })
             .skip(3)
             .collect();
+        console.group("skip");
+        console.log(intArr);
         console.log(skip);
+        console.groupEnd();
+        //distinct
+        var objArr = [
+            {name:"Name1",city:"BeiJing",age:12},
+            {name:"Name2",city:"ShangHai",age:25},
+            {name:"Name3",city:"ShenZhen",age:17},
+            {name:"Name4",city:"ShangHai",age:34},
+            {name:"Name5",city:"BeiJing",age:19},
+            {name:"Name6",city:"BeiJing",age:11}
+        ];
+        var distinct = Stream.of(objArr)
+            .map(function(it){
+                return it.city;
+            }).distinct(function(it1,it2){
+                return it1 == it2;
+            }).collect();
+        console.group("distinct");
+        console.log(objArr);
+        console.log(distinct);
+        console.groupEnd();
         //all
-        var all = Stream.of(1,2,3,4,5,6,7,8,9)
+        var all = Stream.of(intArr)
             .all(function(it){
                 return it > 5;
             });
+        console.group("all");
+        console.log(intArr);
         console.log(all);
+        console.groupEnd();
         //any
-        var any = Stream.of(1,2,3,4,5,6,7,8,9)
+        var any = Stream.of(intArr)
             .any(function(it){
                 return it > 5;
             });
-        console.log(any);
+        console.group("any");
+        console.log(intArr);
+        console.log(all);
+        console.groupEnd();
         //none
-        var none = Stream.of(1,2,3,4,5,6,7,8,9)
+        var none = Stream.of(intArr)
             .none(function(it){
                 return it > 5;
             });
+        console.group("none");
+        console.log(intArr);
         console.log(none);
+        console.groupEnd();
         //count
-        var count = Stream.of(1,2,3,4,5,6,7,8,9)
+        var count = Stream.of(intArr)
             .filter(function(it){
                 return it > 5;
             })
             .count();
+        console.group("count");
+        console.log(intArr);
         console.log(count);
+        console.groupEnd();
         //reduce
-        var reduce = Stream.of(1,2,3,4,5,6,7,8,9)
+        var reduce = Stream.of(intArr)
             .reduce(function(pre,it){
                 return pre + it;
             });
+        console.group("reduce");
+        console.log(intArr);
         console.log(reduce);
+        console.groupEnd();
         //group
-        var group = Stream.of(
-            {name:"Name1",city:"BeiJing"},
-            {name:"Name2",city:"ShangHai"},
-            {name:"Name3",city:"ShenZhen"},
-            {name:"Name4",city:"ShangHai"},
-            {name:"Name5",city:"BeiJing"},
-            {name:"Name6",city:"BeiJing"}
-            ).group(function(it){
+        var group = Stream.of(objArr)
+            .group(function(it){
                 return it.city;
             });
+        console.group("group");
+        console.log(objArr);
         console.log(group);
+        console.groupEnd();
         //partition
-        var partition = Stream.of(
-            {name:"Name1",age:12},
-            {name:"Name2",age:25},
-            {name:"Name3",age:17},
-            {name:"Name4",age:34},
-            {name:"Name5",age:19},
-            {name:"Name6",age:11}
-            ).partition(function(it){
+        var partition = Stream.of(objArr)
+            .partition(function(it){
                 return it.age > 18;
             });
+        console.group("partition");
+        console.log(objArr);
         console.log(partition);
+        console.groupEnd();
         //first
-        var first = Stream.of(
-            {name:"Name1",age:12},
-            {name:"Name2",age:25},
-            {name:"Name3",age:17},
-            {name:"Name4",age:34},
-            {name:"Name5",age:19},
-            {name:"Name6",age:11}
-            ).first(function(it){
+        var first = Stream.of(objArr)
+            .first(function(it){
                 return it.age > 18;
             });
+        console.group("first");
+        console.log(objArr);
         console.log(first);
+        console.groupEnd();
         //last
-        var last = Stream.of(
-            {name:"Name1",age:12},
-            {name:"Name2",age:25},
-            {name:"Name3",age:17},
-            {name:"Name4",age:34},
-            {name:"Name5",age:19},
-            {name:"Name6",age:11}
-            ).last(function(it){
+        var last = Stream.of(objArr)
+            .last(function(it){
                 return it.age > 18;
             });
+        console.group("last");
+        console.log(objArr);
         console.log(last);
-        
-
+        console.groupEnd();
     </script>
 </head>
 <body>

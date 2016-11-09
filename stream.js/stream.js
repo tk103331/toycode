@@ -4,7 +4,7 @@ var Stream = function(){
         this._opers = [];
     };
     Stream.of = function(){
-        if(arguments.length === 0 && arguments[0] instanceof Array){
+        if(arguments.length === 1 && arguments[0] instanceof Array){
             return new Stream(arguments[0]);
         }else{
             var _temp = [];
@@ -42,8 +42,8 @@ var Stream = function(){
         this._opers.push({type:"skip",num:num});
         return this;
     };
-    Stream.prototype.distinct = function(num){
-        this._opers.push({type:"distinct",num:num});
+    Stream.prototype.distinct = function(func){
+        this._opers.push({type:"distinct",func:func});
         return this;
     };
     Stream.prototype.any = function(func){
@@ -169,7 +169,10 @@ var Stream = function(){
                 }
                 _result = _temp;
             }else if(op.type === "sorted"){
-                var _temp = _result;
+                var _temp = [];
+                for(var i in _result){
+                    _temp[i] = _result[i];
+                }
                 for (var i = 0; i < _temp.length; i++) {
                     for (var j = i + 1; j < _temp.length; j++) {
                         if(op.func(_temp[i],_temp[j]) > 0){
@@ -197,7 +200,7 @@ var Stream = function(){
                 for (var i = 0; i < _result.length; i++) {
                     var found = false;
                     for(var j = 0; j < _temp.length; j++){
-                        if(op.func(_temp[j],_result[j]) === true){
+                        if(op.func(_temp[j],_result[i]) === true){
                             found = true;
                             break;
                         }
