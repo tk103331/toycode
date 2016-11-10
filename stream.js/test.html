@@ -4,6 +4,11 @@
     <title>TEST</title>
     <script type="text/javascript" src="stream.js"></script>
     <script type="text/javascript">
+        //range
+        var range = Stream.range(2,10,2,true).collect();
+        console.group("range");
+        console.log(range);
+        console.groupEnd();
         //filter
         var intArr = [1,2,3,4,5,6,7,8,9];
         var filter = Stream.of(intArr)

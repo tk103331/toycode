@@ -14,6 +14,35 @@ var Stream = function(){
             return new Stream(arguments);
         }
     };
+    Stream.range = function(start,end,step,closed){
+        start = start || 0;
+        end = end || 100;
+        step = step || 1;
+        closed = closed === true;
+        var _arr = [];
+        if(start > end && step < 0){
+            if(closed){
+                for(var i = end; i >= start; i = i + step){
+                    _arr.push(i);
+                } 
+            }else{
+                for(var i = end; i > start; i = i + step){
+                    _arr.push(i);
+                } 
+            }
+        }else if(start < end && step > 0){
+            if(closed){
+                for(var i = start; i <= end; i = i + step){
+                    _arr.push(i);
+                }
+            }else{
+                for(var i = start; i < end; i = i + step){
+                    _arr.push(i);
+                }                
+            }
+        }
+        return new Stream(_arr);
+    };
     Stream.prototype.filter = function(func){
         this._opers.push({type:"filter",func:func});
         return this;
