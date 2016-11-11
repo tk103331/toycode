@@ -43,6 +43,41 @@ var Stream = function(){
         }
         return new Stream(_arr);
     };
+    Stream.iterate = function(func,init,limit,skip){
+        init = init || 0;
+        limit = limit || 100;
+        skip = skip || 0;
+        var _temp = init;
+        var _arr = [];
+        while (true) {
+            if(skip > 0){
+                skip--;
+            }else if(_arr.length >= limit){
+                break;
+            }else if(_arr.length < limit){
+                _arr.push(_temp);
+            }
+            _temp = func(_temp);
+        }
+        return new Stream(_arr);
+    };
+    Stream.generate = function(func,limit,skip){
+        limit = limit || 100;
+        skip = skip || 0;
+        var _arr = [];
+        while (true) {
+            var _temp = func();
+            if(skip > 0){
+                skip--;
+                continue;
+            }else if(_arr.length >= limit){
+                break;
+            }else if(_arr.length < limit){
+                _arr.push(_temp);
+            }
+        }
+        return new Stream(_arr);
+    };
     Stream.prototype.filter = function(func){
         this._opers.push({type:"filter",func:func});
         return this;

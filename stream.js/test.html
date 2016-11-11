@@ -9,6 +9,20 @@
         console.group("range");
         console.log(range);
         console.groupEnd();
+        //iterate
+        var iterate = Stream.iterate(function(it){
+            return it + 3;
+        },3,5,2).collect();
+        console.group("iterate");
+        console.log(iterate);
+        console.groupEnd();
+        //generate
+        var generate = Stream.generate(function(){
+            return Math.random();
+        },5,2).collect();
+        console.group("generate");
+        console.log(generate);
+        console.groupEnd();
         //filter
         var intArr = [1,2,3,4,5,6,7,8,9];
         var filter = Stream.of(intArr)
