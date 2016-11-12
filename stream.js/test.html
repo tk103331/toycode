@@ -200,6 +200,36 @@
         console.log(objArr);
         console.log(last);
         console.groupEnd();
+        //min
+        var min = Stream.of(intArr).min();
+        console.group("min");
+        console.log(intArr);
+        console.log(min);
+        console.groupEnd();
+        //max
+        var max = Stream.of(intArr).max();
+        console.group("max");
+        console.log(intArr);
+        console.log(max);
+        console.groupEnd();
+        //sum
+        var sum = Stream.of(intArr).sum();
+        console.group("sum");
+        console.log(intArr);
+        console.log(sum);
+        console.groupEnd();
+        //avg
+        var avg = Stream.of(intArr).avg();
+        console.group("avg");
+        console.log(intArr);
+        console.log(avg);
+        console.groupEnd();
+        //info
+        var info = Stream.of(intArr).info();
+        console.group("info");
+        console.log(intArr);
+        console.log(info);
+        console.groupEnd();
     </script>
 </head>
 <body>

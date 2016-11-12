@@ -193,6 +193,81 @@ var Stream = function(){
             func(_temp[i]);
         }
     };
+    Stream.prototype.min = function(func,isObj){
+        func = func || function(it){ return it; };
+        var _temp = this.collect();
+        var _minObj = _temp[0];
+        var _minVal = func(_minObj);
+        for (var i = 1; i < _temp.length; i++) {
+            var _val = func(_temp[i]);
+            if(_minVal > _val){
+                _minObj = _temp[i];
+                _minVal = _val;
+            }
+        }
+        if(isObj){
+            return _minObj;
+        }else{
+            return _minVal;
+        }
+        
+    };
+    Stream.prototype.max = function(func,isObj){
+        func = func || function(it){ return it; };
+        var _temp = this.collect();
+        var _maxObj = _temp[0];
+        var _maxVal = func(_maxObj);
+        for (var i = 1; i < _temp.length; i++) {
+            var _val = func(_temp[i]);
+            if(_maxVal < _val){
+                _maxObj = _temp[i];
+                _maxVal = _val;
+            }
+        }
+        if(isObj){
+            return _maxObj;
+        }else{
+            return _maxVal;
+        }
+        
+    };
+    Stream.prototype.sum = function(func){
+        func = func || function(it){ return it; };
+        var _temp = this.collect();
+        var _sum = 0;
+        for (var i = 0; i < _temp.length; i++) {
+            _sum = _sum + func(_temp[i]);
+        }
+        return _sum;
+    };
+    Stream.prototype.avg = function(func){
+        func = func || function(it){ return it; };
+        var _temp = this.collect();
+        var _sum = 0;
+        for (var i = 0; i < _temp.length; i++) {
+            _sum = _sum + func(_temp[i]);
+        }
+        return _sum/_temp.length;
+    };
+    Stream.prototype.info = function(func){
+        func = func || function(it){ return it; };
+        var _temp = this.collect();
+        var _count = _temp.length;
+        if(_count == 0){
+            return {count:0};
+        }
+        var _val = func(_temp[0]);
+        var _sum = _val
+        var _min = _val;
+        var _max = _val;
+        for (var i = 1; i < _temp.length; i++) {
+            _val = func(_temp[i]);
+            if(_min > _val){ _min = _val; }
+            if(_max < _val){ _max = _val; }
+            _sum = _sum + _val;
+        }
+        return {count:_count, sum:_sum, avg:_sum/_count, min:_min, max:_max};
+    };
     Stream.prototype.collect = function(){
         var _result = this._data;
         for (var n = 0; n < this._opers.length; n++) {
