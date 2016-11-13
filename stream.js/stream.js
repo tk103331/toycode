@@ -146,7 +146,8 @@ var Stream = function(){
         }
         return _result;
     };
-    Stream.prototype.group = function(func){
+    Stream.prototype.group = function(func,func0){
+        var func0 = func0 || function(arr){ return arr; };
         var _temp = this.collect();
         var _result = {};
         for (var i = 0; i < _temp.length; i++) {
@@ -155,6 +156,9 @@ var Stream = function(){
                 _result[_key] = [];
             }
             _result[_key].push(_temp[i]);
+        }
+        for (var key in _result) {
+            _result[key] =  func0(_result[key]);
         }
         return _result;
     };

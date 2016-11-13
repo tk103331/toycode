@@ -173,6 +173,28 @@
         console.log(objArr);
         console.log(group);
         console.groupEnd();
+        //group2
+        var group2 = Stream.of(objArr)
+            .group(function(it){
+                return it.city;
+            },function(arr){
+                return Stream.of(arr).count();
+            });
+        console.group("group2");
+        console.log(objArr);
+        console.log(group2);
+        console.groupEnd();
+        //group3
+        var group3 = Stream.of(objArr)
+            .group(function(it){
+                return it.city;
+            },function(arr){
+                return Stream.of(arr).map(function(it){return it.name}).collect();
+            });
+        console.group("group3");
+        console.log(objArr);
+        console.log(group3);
+        console.groupEnd();
         //partition
         var partition = Stream.of(objArr)
             .partition(function(it){
