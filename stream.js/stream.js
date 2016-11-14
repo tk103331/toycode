@@ -1,4 +1,5 @@
 var Stream = function(){
+    'use strict'
     var Stream = function(arr){
         this._data = arr;
         this._opers = [];
@@ -109,6 +110,14 @@ var Stream = function(){
     Stream.prototype.distinct = function(func){
         this._opers.push({type:"distinct",func:func});
         return this;
+    };
+
+    Stream.prototype.clone = function(){
+        var _stream = Stream.of(this._data);
+        for (var n = 0; n < this._opers.length; n++) {
+            _stream._opers.push(this._opers[0]);
+        }
+        return _stream;
     };
     Stream.prototype.any = function(func){
         var _temp = this.collect();

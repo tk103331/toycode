@@ -118,6 +118,19 @@
         console.log(objArr);
         console.log(distinct);
         console.groupEnd();
+        //clone
+        var stream = Stream.of(intArr);
+        var clone1 = stream.clone().filter(function(it){
+            return it > 5;
+        }).collect();
+        var clone2 = stream.clone().filter(function(it){
+            return it < 5;
+        }).collect();
+        console.group("clone");
+        console.log(intArr);
+        console.log(clone1);
+        console.log(clone2);
+        console.groupEnd();
         //all
         var all = Stream.of(intArr)
             .all(function(it){
@@ -252,6 +265,7 @@
         console.log(intArr);
         console.log(info);
         console.groupEnd();
+
     </script>
 </head>
 <body>
