@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>suggestions</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue-resource@1.0.3/dist/vue-resource.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="box" class="col-md-4 col-md-offset-4">
+            <sug-list><sug-list/>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.component('sug-item',{
+        props : ['sug','active'],
+        template : '<li class="list-group-item" :class="{active:active}">{{sug}}</li>'
+    });
+    Vue.component('sug-list',{
+        data : function(){
+            return {
+                sugs : [],
+                word : '',
+                cur : -1,
+            }
+        },
+        methods : {
+            get : function(ev){
+                if(ev.key == 'ArrowUp' || ev.key == 'ArrowDown'){
+                    return;
+                }
+                this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+this.word,{
+                    jsonp : 'cb'
+                }).then(function(res){
+                    this.sugs = res.data.s;
+                    this.cur = -1;                
+                },function(res){
+                    console.log(res);
+                });
+            },
+            up : function(){
+                if(this.cur <= 0){
+                    this.cur = this.sugs.length - 1;
+                }else{
+                    this.cur = this.cur - 1;
+                }
+                this.word = this.sugs[this.cur];
+            },
+            down : function(){
+                if(this.cur >= this.sugs.length - 1){
+                    this.cur = 0;
+                }else{
+                    this.cur = this.cur + 1;
+                }
+                this.word = this.sugs[this.cur];
+            }
+        },
+        template : '<div><input v-model="word" @keyup="get($event)" @keydown.up.prevent.stop="up" @keydown.down.prevent.stop="down" class="form-control">\
+        <ol class="list-group"><sug-item v-for="(sug,index) in sugs" :sug="sug" :active="index == cur"/></ol>\
+        </div>'
+    });
+
+    new Vue({
+        el : "#box"
+    });
+</script>
+</html>
