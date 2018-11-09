@@ -202,7 +202,7 @@ var Stream = function(){
     Stream.prototype.forEach = function(func){
         var _temp = this.collect();
         var _result = _temp[0];
-        for (var i = 1; i < _temp.length; i++) {
+        for (var i = 0; i < _temp.length; i++) {
             func(_temp[i]);
         }
     };
