@@ -1,0 +1,19 @@
+{
+  "name": "jstreams",
+  "version": "1.0.0",
+  "description": "A sequence of elements supporting some aggregate operations, like Stream API in Java 8.",
+  "main": "stream.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "array",
+    "stream"
+  ],
+  "author": "tk103331@gmail.com",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tk103331/toycode/tree/master/stream.js"
+  }
+}
