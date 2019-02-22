@@ -1,4 +1,4 @@
-const Stream = (function () {
+var Stream = (function () {
   "use strict";
   var Stream = function (arr) {
     this._data = arr;
@@ -472,4 +472,6 @@ const Stream = (function () {
   return Stream;
 })();
 
-export default Stream;
+if(module && module.exports) {
+  module.exports = Stream;
+}
